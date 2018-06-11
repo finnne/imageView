@@ -1,0 +1,204 @@
+﻿<!DOCTYPE html>
+<html style="height:100%;"  xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<title></title>
+    
+    <style type="text/css">
+        div,form,img,ul,ol,li,dl,dt,dd,input,table,tr,td,thead,tbody{margin:0; padding:0; border:0; }
+        ol,ul,li,dl,dt,dd{list-style-type:none;}
+        .imglist li{width: 200px;height:200px;float: left;}
+
+        .image-center{
+            width:160px;
+            height:160px;
+            display:table-cell;
+            text-align:center;
+            vertical-align:middle;
+            background:#ffffff;
+        }
+		.image-center i{
+	    	*display: inline;
+	    	*zoom:1;
+	        *height:100%;
+	        *vertical-align:middle;
+    	}
+        .image-center img{
+            max-width:140px;
+            max-height: 140px;
+            background-color: #fafafa;
+            border: 1px solid #dddddd;
+            padding:4px;
+            border-radius: 4px;
+            -moz-border-radius: 4px;
+            -webkit-border-radius: 4px;
+            box-shadow: 2px 2px 2px #dddddd;
+            -moz-box-shadow: 2px 2px 2px #dddddd;
+            -webkit-box-shadow: 2px 2px 2px #dddddd;
+            *vertical-align:middle;
+
+        }
+    </style>
+
+ <!--[if lt IE 7]>
+    <style type="text/css">
+
+    .image-center img {
+    	width: 140px;
+    	height: 140px;
+    }
+
+    </style>
+ <![endif]-->
+
+
+
+</head>
+<body style="height:100%;">
+
+     <ul id="imglist" class="imglist" style="width: 900px">
+        <li>
+            <div class="image-center">
+                <i></i><img src="images/1.jpg" name="image">
+            </div>  
+        </li>
+
+        <li>
+            <div class="image-center">
+                <i></i><img src="images/2.jpg" name="image">
+            </div>  
+        </li>
+
+        <li>
+            <div class="image-center">
+                <i></i><img  src="images/3.jpg" name="image">
+            </div>  
+        </li>
+
+        <li>
+           <div class="image-center">
+                <i></i><img  src="images/5.png" name="image">
+            </div>  
+        </li>
+
+        <li>
+           <div class="image-center">
+                <i></i><img  src="images/6.jpg" name="image">
+            </div>  
+        </li>
+
+        <li>
+           <div class="image-center">
+                <i></i><img  src="images/7.jpg" name="image">
+            </div>  
+        </li>
+
+        <li>
+           <div class="image-center">
+                <i></i><img  src="images/8.jpg" name="image">
+            </div>  
+        </li>
+     </ul>
+</body>
+
+<script type="text/javascript" src="js/jquery-1.10.2.min.js"></script> 
+<script type="text/javascript" src="imageView/imageView.js"></script>
+
+<!--[if lt IE 6]> 
+<script type="text/javascript">
+
+	if(!document.getElementsByClassName){
+		document.getElementsByClassName=function(cls){
+	        var els=this.getElementsByTagName('*');
+	        var ell=els.length;
+	        var elements=[];
+	        for(var n=0;n<ell;n++){
+	                var oCls=els[n].className||'';
+	                if(oCls.indexOf(cls)<0)        continue;
+	                oCls=oCls.split(/\s+/);
+	                var oCll=oCls.length;
+	                for(var j=0;j<oCll;j++){
+	                        if(cls==oCls[j]){
+	                                elements.push(els[n]);
+	                                break;
+	                        }
+	                }
+	        }
+	        return elements;
+		}
+	}
+
+	function getImgNaturalSize(img) {
+	    var nWidth, nHeight;
+	    if (img.naturalWidth) { // 现代浏览器
+	        nWidth = img.naturalWidth;
+	        nHeight = img.naturalHeight;
+	    } else { // IE6/7/8
+	        var image = new Image();
+	        image.src = img.src;
+            nWidth = image.width;
+        	nHeight = image.height;
+	    }
+	    return {nw:nWidth,nh:nHeight};
+	}
+
+
+	(function(){
+		var objIC = document.getElementsByClassName('image-center');
+		if(objIC.length == 0) return;
+		var mw = objIC[0].getElementsByTagName('IMG')[0].width;  //图片最大宽度
+		var mh = objIC[0].getElementsByTagName('IMG')[0].height; //图片最大高度
+		var w,h;
+		for(var i = objIC.length-1;i>=0;i--){
+
+			var objImg = objIC[i].getElementsByTagName('IMG')[0];
+			var naturalSize = getImgNaturalSize(objImg);
+			var ratio = naturalSize.nw/naturalSize.nh;
+			if(naturalSize.nw >= naturalSize.nh && naturalSize.nw > mw){
+
+				w = mw;
+				h = parseInt(mw/ratio);
+			}else if(naturalSize.nw < naturalSize.nh && naturalSize.nh > mh){
+				w = parseInt(mh*ratio);
+				h = mh;
+			}else{
+				w = naturalSize.nw;
+				h = naturalSize.nh;
+			}
+
+			objImg.style.width = w +'px';
+			objImg.style.height = h + 'px';
+		}	
+	})();
+       	
+</script>
+ 
+<![endif]-->
+
+<script type="text/javascript">
+    $(document).ready(function(){
+
+
+        var imageView = new ImageView();
+        //调用示例1
+        $('#imglist').find('IMG').click(function(){
+             var objImages = new Array();
+             var index = 0;
+             var that = this;
+             $('#imglist').find('IMG').each(function(i){
+                objImages.push(this.src);
+                if(this.src == that.src){
+                    index = i;
+                }
+             });
+
+             imageView.showImage(objImages,index);
+             // imageView.showImage(this.src);
+        });
+    });
+
+</script>
+
+</html>
+
+
+
