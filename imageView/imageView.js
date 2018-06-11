@@ -571,7 +571,7 @@ ImageView.prototype = {
         if(typeof href != 'undefined'){
         	cssHref = href;
         }else{
-        	var reg = /imageView.js/;
+        	var reg = /imageView\.js/;
         	$('SCRIPT').each(function(){
                 if(reg.test(this.src)){
                     var strCssName = "skin.css";
